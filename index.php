@@ -22,7 +22,7 @@ $events = $bot->parseEventRequest(file_get_contents('php://input'),$signature);
 // 配列に格納された書くイベントをループで処理
 foreach ($events as $event){
   // テキストを返信
-  $bot->replayText($event->getReplyToken(),'TextMessage');
+  $bot->replyText($event->getReplyToken(),'TextMessage');
 }
 
 ?>
