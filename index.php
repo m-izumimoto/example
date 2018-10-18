@@ -34,8 +34,8 @@ foreach ($events as $event){
   'お天気お知らせ',
   '今日の天気予報は晴れです',
   new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ('解約','end'),
-  new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder ('電話番号取得','tel_number'),
-  new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ('メンバー追加','add_member')
+  new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder ('電話番号取得','tel_number')
+  // new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ('メンバー追加','add_member')
 );
 }
 
@@ -71,10 +71,12 @@ function replyButtonsTemplate($bot, $replyToken, $alternativeText,$imageUrl,$tit
     array_push($actionArray, $value);
   }
   //TemplateMessageBuilderの引数は代替テキスト、ButtonTemplateBuilder
-  $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($alternativeText,
+  $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+    $alternativeText,
     // ButtonTemplateBuilderの引数はタイトル、本文
     // 画像URL、アクションの配列
-    new \LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray));
+    new \LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray)
+  );
   $response = $bot->replyMessage($replyToken, $builder);
   if(!$response->isSucceeded()){
     error_log('Failed! '. $response->getHTTPStatus . ' '.$response->getRawBody());
