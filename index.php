@@ -26,7 +26,18 @@ foreach ($events as $event){
   // テキストを返信し次のイベントの処理へ
   // replyTextMessage($bot,$event->getReplyToken(),'TextMessage');
   // 画像を返信する
-  replyImageMessage($bot, $event->getReplyToken(),'https://' . $_SERVER[HTTP_HOST] . '/imgs/original.jpg' , 'https://' . $_SERVER[HTTP_HOST] . '/imgs/preview.jpg');
+  // replyImageMessage($bot, $event->getReplyToken(),'https://' . $_SERVER[HTTP_HOST] . '/imgs/original.jpg' , 'https://' . $_SERVER[HTTP_HOST] . '/imgs/preview.jpg');
+  // Buttonsテンプレートメッセージを返信
+  replyButtonsTemplate($bot,$event->getReplyToken(),
+  'SUBLINE',
+  'https://' .  $_SERVER[HTTP_HOST] . '/imgs/original.jpg'
+  'お天気お知らせ',
+  '今日の天気予報は晴れです',
+  new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ('解約','end'),
+  new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder ('電話番号取得','tel_number'),
+  new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ('メンバー追加','add_member')
+
+);
 }
 
 //テキストを返信。引数はLINEBot、返信先、テキスト
@@ -49,6 +60,27 @@ function replyImageMessage($bot,$replyToken,$originalImageUrl,$previewImageUrl){
   if(!$response->isSucceeded()){
     error_log('Failed! '. $response->getHTTPStatus . ' '.$response->getRawBody());
   }
+}
+
+// Buttonsテンプレートを送信。引数はLINEBot、返信先、代替テキスト
+// 画像URL、タイトル、本文、アクション(可変長引数)
+function replyButtonsTemplate($bot, $replyToken, $alternativeText,$imageUrl,$title,$text, ...$actions) {
+  // アクションを格納する配列
+  $actionArray = array();
+  // アクションをすべて追加
+  foreach($actions as $value) {
+    array_push($actionArray, $value);
+  }
+  //TemplateMessageBuilderの引数は代替テキスト、ButtonTemplateBuilder
+  $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($alternativeText,
+    // ButtonTemplateBuilderの引数はタイトル、本文
+    // 画像URL、アクションの配列
+    new \LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageURL,$actionArray));
+  $response = $bot->replyMessage($replyToken, $builder);
+  if(!$response->isSucceeded()){
+    error_log('Failed! '. $response->getHTTPStatus . ' '.$response->getRawBody());
+  }
+
 }
 
 ?>
