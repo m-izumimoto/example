@@ -30,7 +30,7 @@ foreach ($events as $event){
   // Buttonsテンプレートメッセージを返信
   replyButtonsTemplate($bot,$event->getReplyToken(),
   'SUBLINE',
-  'https://' .  $_SERVER[HTTP_HOST] . '/imgs/original.jpg'
+  'https://' .  $_SERVER[HTTP_HOST] . '/imgs/original.jpg',
   'お天気お知らせ',
   '今日の天気予報は晴れです',
   new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ('解約','end'),
