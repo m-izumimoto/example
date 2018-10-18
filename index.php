@@ -30,13 +30,12 @@ foreach ($events as $event){
   // Buttonsテンプレートメッセージを返信
   replyButtonsTemplate($bot,$event->getReplyToken(),
   'SUBLINE',
-  'https://' .  $_SERVER[HTTP_HOST] . '/imgs/original.jpg',
+  'https://' .  $_SERVER['HTTP_HOST'] . '/imgs/original.jpg',
   'お天気お知らせ',
   '今日の天気予報は晴れです',
   new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ('解約','end'),
   new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder ('電話番号取得','tel_number'),
   new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ('メンバー追加','add_member')
-
 );
 }
 
