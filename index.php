@@ -75,7 +75,7 @@ function replyButtonsTemplate($bot, $replyToken, $alternativeText,$imageUrl,$tit
   $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($alternativeText,
     // ButtonTemplateBuilderの引数はタイトル、本文
     // 画像URL、アクションの配列
-    new \LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageURL,$actionArray));
+    new \LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray));
   $response = $bot->replyMessage($replyToken, $builder);
   if(!$response->isSucceeded()){
     error_log('Failed! '. $response->getHTTPStatus . ' '.$response->getRawBody());
