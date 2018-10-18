@@ -71,11 +71,11 @@ function replyButtonsTemplate($bot, $replyToken, $alternativeText,$imageUrl,$tit
     array_push($actionArray, $value);
   }
   //TemplateMessageBuilderの引数は代替テキスト、ButtonTemplateBuilder
-  $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+  $builder = new LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
     $alternativeText,
     // ButtonTemplateBuilderの引数はタイトル、本文
     // 画像URL、アクションの配列
-    new \LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray)
+    new LINE\LINEBot\MessageBuilder\ButtonTemplateBuilder($title,$text,$imageUrl,$actionArray)
   );
   $response = $bot->replyMessage($replyToken, $builder);
   if(!$response->isSucceeded()){
